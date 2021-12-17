@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cstdlib>    // for random number functions
+#include <ctime>      // for clock functions
+using namespace std;
+
+#include "DynQueue.h"                     // Requires queue ADT
+
+double randVal();                         // Prototype for random generation function
+
+const double NORTH_SOUTH_ARRIVE_FREQ = 1.0/10.0;    // Prob. of car arriving each second
+const double EAST_WEST_ARRIVE_FREQ = 1.0/30.0;    // Prob. of car arriving each second
+const int REDLIGHTON = 120;
+const int GREENLIGHTON = 360;
+
+const int SIM_TIME = 3600;                   // In seconds
+const int ONE_MINUTE = 60;
+
+int main()
+{
+    // Set up for random number generator
+    srand(time(0));            // Set seed for random number to clock
+    
+    
+    // Variables
+    DynQueue<int> northSouth_q;   // north/south queue
+    DynQueue<int> eastWest_q;   // east/west queue
+    
+    int time;                 // Time clock for simulation
+    int i;
+    
+    
+    int northSouthCars = 0;          // Total arrival counter
+    int EastWestCars = 0;          // Total departures counter
+    
+    // SIMULATION
+    for (time=1;time <= SIM_TIME; time++)
+    {
+        if (randVal() <= NORTH_SOUTH_ARRIVE_FREQ)              // New arrival
+        {
+            northSouth_q.enqueue(time);                    // enqueue
+        }
+        if (randVal() <= EAST_WEST_ARRIVE_FREQ)              // New departure
+        {
+            eastWest_q.enqueue(time);                    // enqueue
+        }
+           //commented out because i noticed that i require the use of (is empty) but it would still
+           //i can see how its not going to work because if it was not empty it would still dequeue nothing, or try to     
+//        for (i = 0; i <= GREENLIGHTON; i++)
+//        {
+//            northSouth_q.dequeue();
+//            northSouthCars++;
+//        }
+//        
+//        for (i = 0; i <= GREENLIGHTON; i++)
+//        {
+//            eastWest_q.dequeue();
+//            EastWestCars++;
+//        }
+        
+            
+             
+    }
+}
+
+/*************************************************************************/
+/*    This functions returns as random number between 0.0 and 1.0        */
+/*************************************************************************/
+double randVal()
+{
+    return double(rand()) / double(RAND_MAX);
+}
+
